@@ -19,7 +19,7 @@ import org.json.simple.JSONObject;
 public class Victime {
     private Date date ;
     private int age ;
-    private static SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    private static final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     public Victime(JSONObject jsono) {
         try {

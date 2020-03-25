@@ -66,7 +66,7 @@ public class Model {
     }
 
     private void nettoyer(ArrayList<Data> l) {
-       //A faire
+       //A faire       
     }
 
     public ArrayList<String> getDepts() {
@@ -76,8 +76,6 @@ public class Model {
         return deptsArrayList;
     }
     
-      
-
     public ArrayList<Data> getlWorld() {
         return lWorld;
     }

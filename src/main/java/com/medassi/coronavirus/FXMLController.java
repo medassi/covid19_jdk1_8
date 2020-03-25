@@ -95,17 +95,54 @@ public class FXMLController implements Initializable {
             llData.add(model.getHmByDep().get(s));
             univers += s + ";";
         }
+        loadPaneDeptReg(llData, univers);
     }
 
     @FXML
     private void onMouseClickedLvReg(MouseEvent event) {
-      
+        //A faire
+    }
+
+    private void loadPaneDeptReg(ArrayList<ArrayList<Data>> llData, String univers) {
+        ObservableList<String> categories = FXCollections.observableArrayList();
+        ArrayList<XYChart.Series<String, Integer>> seriesCasConfirmes = new ArrayList<>();
+        for (ArrayList<Data> lData : llData) {
+            XYChart.Series<String, Integer> serieCasConfirmes = new XYChart.Series<>();
+            Collections.sort(lData, (Data o1, Data o2) -> {
+                Date d1 = o1.getDate();
+                Date d2 = o2.getDate();
+                return d1.compareTo(d2);
+            });
+            for (Data d : lData) {
+                if (!categories.contains(sdf.format(d.getDate()))) {
+                    categories.add(sdf.format(d.getDate()));
+                }
+                if (d.getCasConfirmes() != -1) {
+                    serieCasConfirmes.getData().add(new XYChart.Data<>(sdf.format(d.getDate()), d.getCasConfirmes()));
+                }
+                univers = d.getNom();
+            }
+            serieCasConfirmes.setName("Conf. " + univers);
+            seriesCasConfirmes.add(serieCasConfirmes);
+        }
+        CategoryAxis xAxis = new CategoryAxis(categories);
+        NumberAxis yAxis = new NumberAxis();
+        xAxis.setLabel("Jours");
+        yAxis.setLabel("Nb cas :" + univers);
+        LineChart linechart = new LineChart(xAxis, yAxis);
+        linechart.setTitle("Evolution du Covid-19 : " + univers);
+        linechart.getData().addAll(seriesCasConfirmes);
+        linechart.getYAxis().setAutoRanging(true);
+        for (XYChart.Series<String, Integer> s : seriesCasConfirmes) {
+            toolTipper(s, " cas confimés " + univers);
+        }
+        vBoxDept.getChildren().clear();
+        vBoxDept.getChildren().add(linechart);
     }
 
     private void loadPane(ArrayList<Data> lData, Pane pane, String univers) {
         XYChart.Series<String, Integer> seriesCasConfirmes = new XYChart.Series<>();
         seriesCasConfirmes.setName("Conf. " + univers);
-      
         Collections.sort(lData, new Comparator<Data>() {
             @Override
             public int compare(Data o1, Data o2) {
@@ -121,7 +158,6 @@ public class FXMLController implements Initializable {
             if (d.getCasConfirmes() != -1) {
                 seriesCasConfirmes.getData().add(new XYChart.Data<>(sdf.format(d.getDate()), d.getCasConfirmes()));
             }
-          
         }
         CategoryAxis xAxis = new CategoryAxis(categories);
         xAxis.setLabel("Cas - " + univers);
