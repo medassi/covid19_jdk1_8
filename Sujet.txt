@@ -1,0 +1,6 @@
+nettoyer de la classe Model : permet de supprimer les doublons de date.
+	Caused by: java.lang.IllegalArgumentException: Duplicate category added; 27/01 already present
+Traiter les données France
+Traiter les décés
+Traiter les guéris
+Traiter par région
