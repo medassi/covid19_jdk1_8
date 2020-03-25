@@ -76,13 +76,7 @@ public class Model {
         return deptsArrayList;
     }
     
-    public ArrayList<String> getRegs() {
-        Set<String> regsSet = hmByReg.keySet();
-        ArrayList<String> regsArrayList = new ArrayList<>(regsSet);
-        Collections.sort(regsArrayList);
-        return regsArrayList;
-    }
-    
+      
 
     public ArrayList<Data> getlWorld() {
         return lWorld;
